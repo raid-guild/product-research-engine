@@ -1,0 +1,4 @@
+interface:
+  display_name: "Product Signal Summarizer"
+  short_description: "Synthesize signals into signal notes"
+  default_prompt: "Use $product-signal-summarizer to fetch this idea's signals and write the Phase 2 signal-notes summary."

@@ -2,6 +2,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ArrowLeft, BookOpen, MessageSquarePlus } from "lucide-react";
 import { AppNav } from "@/components/ideation/AppNav";
+import { MarkdownReport } from "@/components/ideation/MarkdownReport";
 import { PitchCardRenderer } from "@/components/ideation/PitchCardRenderer";
 import { SignalReactionForm } from "@/components/ideation/SignalReactionForm";
 import { SignalReactionList } from "@/components/ideation/SignalReactionList";
@@ -66,7 +67,7 @@ export default async function IdeaPage({ params }: IdeaPageProps) {
         <Tabs defaultValue="pitch" className="space-y-8">
           <TabsList>
             <TabsTrigger value="pitch">Pitch</TabsTrigger>
-            <TabsTrigger value="signals">Signal Reactions</TabsTrigger>
+            <TabsTrigger value="signals">Signals</TabsTrigger>
             <TabsTrigger value="research">Research</TabsTrigger>
           </TabsList>
 
@@ -75,12 +76,33 @@ export default async function IdeaPage({ params }: IdeaPageProps) {
           </TabsContent>
 
           <TabsContent value="signals" className="grid gap-8 lg:grid-cols-[minmax(0,1fr)_380px]">
-            <section className="space-y-4">
-              <div className="flex items-center gap-2">
-                <MessageSquarePlus className="h-5 w-5 text-primary" aria-hidden="true" />
-                <h2 className="font-heading text-2xl">Raw Reactions</h2>
+            <section className="space-y-6">
+              <div className="space-y-4">
+                <h2 className="font-heading text-2xl">Signal Summary</h2>
+                {idea.signalSummary ? (
+                  <article className="border border-border bg-card/70 p-6">
+                    <div className="mb-6 border-b border-border pb-4">
+                      <p className="font-mono text-xs uppercase tracking-[0.18em] text-primary">
+                        {idea.signalSummary.fileName} · {idea.signalSummary.readingTime}
+                      </p>
+                    </div>
+                    <MarkdownReport content={idea.signalSummary.content} />
+                  </article>
+                ) : (
+                  <div className="border border-border bg-card/70 p-6 text-sm text-muted-foreground">
+                    No signal summary exists yet. Use the signal summarizer skill to synthesize raw
+                    reactions into `signal-notes.md`.
+                  </div>
+                )}
               </div>
-              <SignalReactionList reactions={reactions} />
+
+              <div className="space-y-4">
+                <div className="flex items-center gap-2">
+                  <MessageSquarePlus className="h-5 w-5 text-primary" aria-hidden="true" />
+                  <h2 className="font-heading text-2xl">Raw Reactions</h2>
+                </div>
+                <SignalReactionList reactions={reactions} />
+              </div>
             </section>
             <aside className="space-y-4">
               <h2 className="font-heading text-2xl">Add Signal</h2>
@@ -111,8 +133,7 @@ export default async function IdeaPage({ params }: IdeaPageProps) {
             )}
             <Separator />
             <p className="text-sm text-muted-foreground">
-              Local `signal-notes.md` files are preserved for synthesis and are not overwritten by
-              this app.
+              Signal summaries are stored separately from research dossier files as `signal-notes.md`.
             </p>
           </TabsContent>
         </Tabs>

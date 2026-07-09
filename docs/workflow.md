@@ -39,6 +39,8 @@ Quality bar:
 
 Trigger: user has some reason to continue. The signal may be weak but should be explicit.
 
+Skill: `skills/product-signal-summarizer`
+
 Valid early signal:
 
 - internal team members react strongly

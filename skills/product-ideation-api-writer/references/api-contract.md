@@ -85,6 +85,24 @@ Artifact types:
 - `research_plan`
 - `research_report`
 
+Signal notes are stored as:
+
+```text
+PUT /api/agent/v1/ideas/{slug}/artifacts/signal-notes
+```
+
+with:
+
+```json
+{
+  "artifactType": "signal_summary",
+  "title": "Signal Notes: Working Name",
+  "fileName": "signal-notes.md",
+  "sortOrder": 2,
+  "contentMarkdown": "# Signal Notes: Working Name\n\n..."
+}
+```
+
 ## Fetch Context
 
 ```text

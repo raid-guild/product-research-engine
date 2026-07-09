@@ -36,6 +36,7 @@ export type IdeaRunSummary = {
 export type IdeaRun = IdeaRunSummary & {
   pitchCard?: MarkdownDocument;
   onePageBrief?: MarkdownDocument;
+  signalSummary?: MarkdownDocument;
   researchFiles: ResearchFile[];
 };
 
@@ -163,6 +164,7 @@ export const getIdeaRun = (slug: string): IdeaRun | undefined => {
 
   const pitchCard = readMarkdownDocument(slug, "00-pitch-card.md");
   const onePageBrief = readMarkdownDocument(slug, "01-one-page-product-brief.md");
+  const signalSummary = readMarkdownDocument(slug, "signal-notes.md");
   const researchFiles = getResearchFiles(slug);
   const runDirectory = getRunDirectory(slug);
 
@@ -174,9 +176,10 @@ export const getIdeaRun = (slug: string): IdeaRun | undefined => {
     hasOnePageBrief: Boolean(onePageBrief),
     hasResearchPlan: fileExists(path.join(runDirectory, "research-plan.md")),
     researchFileCount: researchFiles.length,
-    markdownSignalExists: fileExists(path.join(runDirectory, "signal-notes.md")),
+    markdownSignalExists: Boolean(signalSummary),
     pitchCard,
     onePageBrief,
+    signalSummary,
     researchFiles,
   };
 };
@@ -185,4 +188,4 @@ export const getIdeaRuns = (): IdeaRunSummary[] =>
   getIdeaSlugs()
     .map(getIdeaRun)
     .filter((run): run is IdeaRun => Boolean(run))
-    .map(({ pitchCard, onePageBrief, researchFiles, ...summary }) => summary);
+    .map(({ pitchCard, onePageBrief, signalSummary, researchFiles, ...summary }) => summary);

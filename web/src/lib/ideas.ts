@@ -94,6 +94,7 @@ const rowToIdeaRun = (idea: Idea & { artifacts: IdeaArtifact[] }): IdeaRun => {
     markdownSignalExists: Boolean(signalSummary),
     pitchCard: pitchCardDocument,
     onePageBrief: onePageBrief ? artifactToDocument(onePageBrief) : undefined,
+    signalSummary: signalSummary ? artifactToDocument(signalSummary) : undefined,
     researchFiles,
   };
 };
@@ -120,7 +121,7 @@ export const getIdeaRuns = async (): Promise<IdeaRunSummary[]> => {
     const dbRuns = await getDbIdeaRuns();
 
     if (dbRuns) {
-      return dbRuns.map(({ pitchCard, onePageBrief, researchFiles, ...summary }) => summary);
+      return dbRuns.map(({ pitchCard, onePageBrief, signalSummary, researchFiles, ...summary }) => summary);
     }
   } catch (error) {
     console.error("Could not read DB-backed ideas; falling back to markdown runs.", error);
