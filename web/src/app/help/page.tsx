@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import { Bot, FileText, HelpCircle, MessageSquare, Search } from "lucide-react";
 import { AppNav } from "@/components/ideation/AppNav";
@@ -43,18 +44,30 @@ export default function HelpPage() {
     <div className="noise-bg min-h-screen bg-background">
       <AppNav />
       <main className="relative z-10 mx-auto max-w-6xl px-6 py-10">
-        <header className="mb-10 max-w-3xl">
-          <p className="flex items-center gap-2 font-mono text-xs uppercase tracking-[0.18em] text-primary">
-            <HelpCircle className="h-4 w-4" aria-hidden="true" />
-            Help
-          </p>
-          <h1 className="mt-3 font-heading text-4xl font-bold md:text-5xl">
-            Idea to Research Flow
-          </h1>
-          <p className="mt-4 text-base leading-7 text-muted-foreground">
-            The ideation process moves from a rough product hunch to human signal, then to a
-            synthesized signal gate, and finally to deeper research when the signal is strong enough.
-          </p>
+        <header className="mb-10 grid gap-8 lg:grid-cols-[minmax(0,1fr)_220px] lg:items-center">
+          <div className="max-w-3xl">
+            <p className="flex items-center gap-2 font-mono text-xs uppercase tracking-[0.18em] text-primary">
+              <HelpCircle className="h-4 w-4" aria-hidden="true" />
+              P.I.E. Help
+            </p>
+            <h1 className="mt-3 font-heading text-4xl font-bold md:text-5xl">
+              Product Ideation Engine Flow
+            </h1>
+            <p className="mt-4 text-base leading-7 text-muted-foreground">
+              P.I.E. moves a rough product hunch to human signal, then to a synthesized signal
+              gate, and finally to deeper research when the signal is strong enough.
+            </p>
+          </div>
+          <div className="hidden justify-self-end border border-border bg-card/70 p-3 lg:block">
+            <Image
+              src="/cherry-pie-v1.png"
+              alt="P.I.E. brand mark"
+              width={188}
+              height={188}
+              className="aspect-square w-full object-cover"
+              priority
+            />
+          </div>
         </header>
 
         <section className="grid gap-4 lg:grid-cols-4">
@@ -101,7 +114,7 @@ export default function HelpPage() {
               <div>
                 <h3 className="font-heading text-lg">In This App</h3>
                 <p className="mt-2 text-sm leading-6 text-muted-foreground">
-                  Browse ideas, add human signal, inspect the signal summary, and read research
+                  Browse ideas in P.I.E., add human signal, inspect the signal summary, and read research
                   outputs as they are written back to the database.
                 </p>
               </div>
