@@ -111,4 +111,4 @@ npm run db:import:runs
 npm run db:agent-key initial-agent
 ```
 
-The app uses Next.js standalone output for Railway-friendly self-hosting.
+The app uses the standard Next.js production server through `next start`.

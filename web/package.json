@@ -7,7 +7,7 @@
   "scripts": {
     "dev": "next dev",
     "build": "DATABASE_URL=${DATABASE_URL:-postgresql://user:password@localhost:5432/product_ideation} prisma generate && next build",
-    "start": "node .next/standalone/server.js",
+    "start": "next start",
     "lint": "eslint .",
     "db:migrate": "prisma migrate deploy",
     "db:dev": "prisma migrate dev",
