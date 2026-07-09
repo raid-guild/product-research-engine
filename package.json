@@ -1,0 +1,17 @@
+{
+  "private": true,
+  "scripts": {
+    "dev": "cd web && npm run dev",
+    "build": "cd web && npm ci && npm run build",
+    "start": "cd web && npm run start",
+    "lint": "cd web && npm run lint",
+    "db:migrate": "cd web && npm run db:migrate",
+    "db:dev": "cd web && npm run db:dev",
+    "db:generate": "cd web && npm run db:generate",
+    "db:import:runs": "cd web && npm run db:import:runs",
+    "db:agent-key": "cd web && npm run db:agent-key"
+  },
+  "engines": {
+    "node": "22.x"
+  }
+}

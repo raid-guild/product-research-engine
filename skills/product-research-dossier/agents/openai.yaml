@@ -1,0 +1,4 @@
+interface:
+  display_name: "Product Research Dossier"
+  short_description: "Research validated ideas into dossiers"
+  default_prompt: "Use $product-research-dossier to create a research plan and dossier for this signaled product idea."

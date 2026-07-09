@@ -1,0 +1,103 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Idea {
+  id               String         @id @default(cuid())
+  slug             String         @unique
+  title            String
+  description      String         @default("")
+  oneSentencePitch String?        @map("one_sentence_pitch")
+  status           String         @default("pitch")
+  createdByType    String?        @map("created_by_type")
+  createdBy        String?        @map("created_by")
+  createdAt        DateTime       @default(now()) @map("created_at")
+  updatedAt        DateTime       @updatedAt @map("updated_at")
+  artifacts        IdeaArtifact[]
+  signals          Signal[]
+
+  @@index([status], map: "pie_ideas_status_idx")
+  @@index([createdAt], map: "pie_ideas_created_at_idx")
+  @@map("pie_ideas")
+}
+
+model IdeaArtifact {
+  id              String   @id @default(cuid())
+  ideaId          String   @map("idea_id")
+  idea            Idea     @relation(fields: [ideaId], references: [id], onDelete: Cascade)
+  artifactType    String   @map("artifact_type")
+  slug            String
+  title           String
+  fileName        String?  @map("file_name")
+  sortOrder       Int      @default(0) @map("sort_order")
+  contentMarkdown String   @map("content_markdown")
+  metadata        Json?
+  createdByType   String?  @map("created_by_type")
+  createdBy       String?  @map("created_by")
+  createdAt       DateTime @default(now()) @map("created_at")
+  updatedAt       DateTime @updatedAt @map("updated_at")
+
+  @@unique([ideaId, artifactType, slug], map: "pie_idea_artifacts_idea_type_slug_key")
+  @@index([ideaId, artifactType, sortOrder], map: "pie_idea_artifacts_idea_type_sort_idx")
+  @@map("pie_idea_artifacts")
+}
+
+model Signal {
+  id              String    @id @default(cuid())
+  ideaId          String    @map("idea_id")
+  idea            Idea      @relation(fields: [ideaId], references: [id], onDelete: Cascade)
+  title           String
+  description     String    @default("")
+  sourceType      String    @default("internal_reaction") @map("source_type")
+  sourceUrl       String?   @map("source_url")
+  sourceDate      DateTime? @map("source_date")
+  strength        String?
+  sentiment       String?
+  rawMarkdown     String?   @map("raw_markdown")
+  summaryMarkdown String?   @map("summary_markdown")
+  researchQuestion String?  @map("research_question")
+  capturedByType  String?   @map("captured_by_type")
+  capturedBy      String?   @map("captured_by")
+  createdAt       DateTime  @default(now()) @map("created_at")
+  updatedAt       DateTime  @updatedAt @map("updated_at")
+
+  @@index([ideaId, createdAt], map: "pie_signals_idea_created_at_idx")
+  @@index([sourceType], map: "pie_signals_source_type_idx")
+  @@map("pie_signals")
+}
+
+model AgentApiKey {
+  id         String    @id @default(cuid())
+  label      String
+  keyPrefix  String    @map("key_prefix")
+  keyHash    String    @unique @map("key_hash")
+  scopes     String[]
+  createdAt  DateTime  @default(now()) @map("created_at")
+  lastUsedAt DateTime? @map("last_used_at")
+  revokedAt  DateTime? @map("revoked_at")
+
+  @@index([keyPrefix], map: "pie_agent_api_keys_key_prefix_idx")
+  @@map("pie_agent_api_keys")
+}
+
+model SignalReaction {
+  id               String   @id @default(cuid())
+  relatedIdeaSlug  String   @map("related_idea_slug")
+  relatedIdeaTitle String?  @map("related_idea_title")
+  reactionEmoji    String   @map("reaction_emoji")
+  note             String
+  researchQuestion String?  @map("research_question")
+  submittedBy      String?  @map("submitted_by")
+  submittedAt      DateTime @default(now()) @map("submitted_at")
+  updatedAt        DateTime @updatedAt @map("updated_at")
+
+  @@index([relatedIdeaSlug], map: "pie_signal_reactions_related_idea_slug_idx")
+  @@index([reactionEmoji], map: "pie_signal_reactions_reaction_emoji_idx")
+  @@index([submittedAt], map: "pie_signal_reactions_submitted_at_idx")
+  @@map("pie_signal_reactions")
+}

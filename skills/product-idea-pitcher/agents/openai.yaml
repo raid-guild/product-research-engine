@@ -1,0 +1,4 @@
+interface:
+  display_name: "Product Idea Pitcher"
+  short_description: "Turn messy ideas into pitch cards"
+  default_prompt: "Use $product-idea-pitcher to turn this messy product idea into a concise pitch card and one-page brief."

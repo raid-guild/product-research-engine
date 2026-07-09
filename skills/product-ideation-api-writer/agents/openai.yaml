@@ -1,0 +1,4 @@
+interface:
+  display_name: "Product Ideation API Writer"
+  short_description: "Write ideas and signals to the deployed ideation app"
+  default_prompt: "Use $product-ideation-api-writer to create or update this product idea in the shared Product Ideation Engine."
