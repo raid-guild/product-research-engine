@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Lightbulb } from "lucide-react";
+import { HelpCircle, Inbox, Lightbulb } from "lucide-react";
 
 export function AppNav() {
   return (
@@ -18,6 +18,30 @@ export function AppNav() {
             </span>
           </span>
         </Link>
+        <nav className="flex items-center gap-1">
+          <Link
+            href="/ideas"
+            className="flex h-9 items-center gap-2 px-3 text-sm text-muted-foreground transition-colors hover:bg-muted/50 hover:text-foreground"
+          >
+            <Lightbulb className="h-4 w-4" aria-hidden="true" />
+            <span className="hidden sm:inline">Ideas</span>
+          </Link>
+          <Link
+            href="/signal-reactions"
+            className="flex h-9 items-center gap-2 px-3 text-sm text-muted-foreground transition-colors hover:bg-muted/50 hover:text-foreground"
+          >
+            <Inbox className="h-4 w-4" aria-hidden="true" />
+            <span className="hidden sm:inline">Signals</span>
+          </Link>
+          <Link
+            href="/help"
+            className="flex h-9 items-center gap-2 px-3 text-sm text-muted-foreground transition-colors hover:bg-muted/50 hover:text-foreground"
+            aria-label="Help"
+          >
+            <HelpCircle className="h-4 w-4" aria-hidden="true" />
+            <span className="hidden sm:inline">Help</span>
+          </Link>
+        </nav>
       </div>
     </header>
   );
